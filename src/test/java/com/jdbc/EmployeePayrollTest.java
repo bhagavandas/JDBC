@@ -17,5 +17,21 @@ public class EmployeePayrollTest {
 		Assert.assertTrue(result);
 
 	}
+	
+	//UC 4
+	@Test
+	public void givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDBWithPreparedStatement() {
+		EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, "Anirban", 3000000, null);
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		
+		List<EmployeePayrollData> result2 = employeePayrollService.RetrieveEmployeePayrollDataByName(employeePayrollData.getName());
+		
 
+		System.out.println(employeePayrollData.getName());
+		Assert.assertEquals(employeePayrollData.getName(), "Anirban");
+		
+
+		
+}
+	
 }

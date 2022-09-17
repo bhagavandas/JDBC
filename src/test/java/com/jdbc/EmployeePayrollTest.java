@@ -30,8 +30,7 @@ public class EmployeePayrollTest {
 		System.out.println(employeePayrollData.getName());
 		Assert.assertEquals(employeePayrollData.getName(), "Anirban");
 		
-
-		
 }
+	
 	
 }

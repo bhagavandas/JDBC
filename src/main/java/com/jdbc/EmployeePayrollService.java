@@ -30,7 +30,9 @@ public class EmployeePayrollService {
 		// getEmployeePayrollDataUsingDB("Select * from employee_payroll; ");
 		// updateEmployeeSalary(name, salary);
 		//PrepareStatementForEmployeeData();
-		RetrieveEmployeePayrollDataByName(name);
+		//RetrieveEmployeePayrollDataByName(name);
+		RetrieveEmployeePayrollDataByName(start_date);
+		
 
 	}
 
@@ -152,20 +154,20 @@ public class EmployeePayrollService {
 
 	// UC 4.1 & UC 5
 
-	public static List<EmployeePayrollData> RetrieveEmployeePayrollDataByName(String name) {
+	public static List<EmployeePayrollData> RetrieveEmployeePayrollDataByName(Date start_date) {
 		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 		try {
 			Connection connection = getConnection();
 			Statement statement = (Statement) connection.createStatement();
 
 			PreparedStatement preparedStatement;
-			String query = "Select * from employee_payroll where name=?";
-			//String query = "Select * from employee_payroll where start_date=?";
+			//String query = "Select * from employee_payroll where name=?";
+			String query = "Select * from employee_payroll where start_date between '2020-05-15' and '2022-06-25' ";
 			
 			preparedStatement = (PreparedStatement) con.prepareStatement(query);
 			EmployeePayrollData employeePayrollData = new EmployeePayrollData(id, name, salary, start_date);
-			//int empID = 
-			preparedStatement.setString(1, name);
+			
+			//preparedStatement.setString(1, name);
 			//preparedStatement.setString(1, "2022-05-10");
 			
 			ResultSet res = preparedStatement.executeQuery();
@@ -193,7 +195,8 @@ public class EmployeePayrollService {
 	}
 	
 	public boolean checkEmployeePayrollInPreparedStatement( String name) {
-		List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(name);
+		//List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(name);
+		List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(start_date);
 		return true;
 	}
 

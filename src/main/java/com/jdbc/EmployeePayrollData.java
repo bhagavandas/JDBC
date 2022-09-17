@@ -32,29 +32,43 @@ public class EmployeePayrollData {
 	 * @param incomeTax
 	 * @param netPay
 	 */
-	public EmployeePayrollData(int id, String name, String gender, double salary, Date date, long phoneNumber,
-			String address, String department, float basicPay, float deductions, float taxablePay, float incomeTax,
-			float netPay) {
-		this.id = id;
-		this.name = name;
-		this.gender = gender;
-		this.salary = salary;
-		this.date = date;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.department = department;
-		this.basicPay = basicPay;
-		this.deductions = deductions;
-		this.taxablePay = taxablePay;
-		this.incomeTax = incomeTax;
-		this.netPay = netPay;
-	}
+//	public EmployeePayrollData(int id, String name, String gender, double salary, Date date, long phoneNumber,
+//			String address, String department, float basicPay, float deductions, float taxablePay, float incomeTax,
+//			float netPay) {
+//		this.id = id;
+//		this.name = name;
+//		this.gender = gender;
+//		this.salary = salary;
+//		this.date = date;
+//		this.phoneNumber = phoneNumber;
+//		this.address = address;
+//		this.department = department;
+//		this.basicPay = basicPay;
+//		this.deductions = deductions;
+//		this.taxablePay = taxablePay;
+//		this.incomeTax = incomeTax;
+//		this.netPay = netPay;
+//	}
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "EmployeePayrollData [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary
 				+ ", date=" + date + ", phoneNumber=" + phoneNumber + ", address=" + address + ", department="
 				+ department + ", basicPay=" + basicPay + ", deductions=" + deductions + ", taxablePay=" + taxablePay
 				+ ", incomeTax=" + incomeTax + ", netPay=" + netPay + "]";
+	}
+	/**
+	 * @param id
+	 * @param name
+	 * @param salary
+	 */
+	public EmployeePayrollData(int id, String name, double salary) {
+		this.id = id;
+		this.name = name;
+		this.salary = salary;
 	};
 	
 	

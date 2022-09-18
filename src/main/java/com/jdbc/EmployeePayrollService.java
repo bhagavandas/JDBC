@@ -23,6 +23,7 @@ public class EmployeePayrollService {
 	static String password = "root";
 	static Connection con;
 	static int rs;
+	static String query;
 
 	public static void main(String[] args) {
 		// getConnection();
@@ -31,7 +32,8 @@ public class EmployeePayrollService {
 		// updateEmployeeSalary(name, salary);
 		//PrepareStatementForEmployeeData();
 		//RetrieveEmployeePayrollDataByName(name);
-		RetrieveEmployeePayrollDataByName(start_date);
+		//RetrieveEmployeePayrollDataByName(start_date);
+		analyseEmployee();
 		
 
 	}
@@ -154,15 +156,15 @@ public class EmployeePayrollService {
 
 	// UC 4.1 & UC 5
 
-	public static List<EmployeePayrollData> RetrieveEmployeePayrollDataByName(Date start_date) {
+	public static List<EmployeePayrollData> RetrieveEmployeePayrollDataByName(String name) { // Date date
 		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 		try {
 			Connection connection = getConnection();
 			Statement statement = (Statement) connection.createStatement();
 
 			PreparedStatement preparedStatement;
-			//String query = "Select * from employee_payroll where name=?";
-			String query = "Select * from employee_payroll where start_date between '2020-05-15' and '2022-06-25' ";
+			String query = "Select * from employee_payroll where name=?";
+			//String query = "Select * from employee_payroll where start_date between '2020-05-15' and '2022-06-25' ";
 			
 			preparedStatement = (PreparedStatement) con.prepareStatement(query);
 			EmployeePayrollData employeePayrollData = new EmployeePayrollData(id, name, salary, start_date);
@@ -195,9 +197,63 @@ public class EmployeePayrollService {
 	}
 	
 	public boolean checkEmployeePayrollInPreparedStatement( String name) {
-		//List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(name);
-		List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(start_date);
+		List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(name);
+		//List<EmployeePayrollData> employeePayrollList = this.RetrieveEmployeePayrollDataByName(start_date);
 		return true;
+	}
+	
+	// UC6
+	public static List<EmployeePayrollData> analyseEmployee() {
+		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+		try {
+			Connection connection = getConnection();
+			Statement statement = (Statement) connection.createStatement();
+
+			PreparedStatement preparedStatement;
+			
+			//String query = "select sum(salary) from employee_payroll where gender='F' group by gender ";
+			//String query1 = "select Avg(salary) from employee_payroll where gender='F' group by gender ";
+//			String query2 = "select Min(salary) from employee_payroll where gender='F' group by gender ";
+//			String query3 = "select max(salary) from employee_payroll where gender='F' group by gender ";
+//			String query4 = "select count(salary) from employee_payroll where gender='F' group by gender ";
+			
+//			String query = "select sum(salary) from employee_payroll where gender='M' group by gender ";
+//			String query1 = "select Avg(salary) from employee_payroll where gender='M' group by gender ";
+			String query2 = "select Min(salary) from employee_payroll where gender='M' group by gender ";
+//			String query3 = "select max(salary) from employee_payroll where gender='M' group by gender ";
+//			String query4 = "select count(salary) from employee_payroll where gender='M' group by gender ";
+			
+			//preparedStatement = (PreparedStatement) con.prepareStatement(query);
+			//preparedStatement = (PreparedStatement) con.prepareStatement(query1);
+			preparedStatement = (PreparedStatement) con.prepareStatement(query2);
+//			preparedStatement = (PreparedStatement) con.prepareStatement(query3);
+//			preparedStatement = (PreparedStatement) con.prepareStatement(query4);
+			
+			EmployeePayrollData employeePayrollData = new EmployeePayrollData(id, name, salary, start_date);
+			
+			
+			ResultSet res = preparedStatement.executeQuery();
+			
+			while (res.next()) {
+				//id = res.getInt(1);
+				//name = res.getString(2);
+				salary = res.getDouble(1);
+				//System.out.println("Employee Number: " + id);
+				//System.out.println("Employee Name: " + name);
+				System.out.println("Employee Salary: " + salary);
+				
+				
+				employeePayrollList.add(new EmployeePayrollData(id, name, salary, start_date));
+			}
+			
+			System.out.println("Data Updated! " + res);
+			
+			System.out.println(employeePayrollList);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollList;
 	}
 
 }

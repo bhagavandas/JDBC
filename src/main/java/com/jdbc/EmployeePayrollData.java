@@ -32,23 +32,23 @@ public class EmployeePayrollData {
 	 * @param incomeTax
 	 * @param netPay
 	 */
-//	public EmployeePayrollData(int id, String name, String gender, double salary, Date date, long phoneNumber,
-//			String address, String department, float basicPay, float deductions, float taxablePay, float incomeTax,
-//			float netPay) {
-//		this.id = id;
-//		this.name = name;
-//		this.gender = gender;
-//		this.salary = salary;
-//		this.date = date;
-//		this.phoneNumber = phoneNumber;
-//		this.address = address;
-//		this.department = department;
-//		this.basicPay = basicPay;
-//		this.deductions = deductions;
-//		this.taxablePay = taxablePay;
-//		this.incomeTax = incomeTax;
-//		this.netPay = netPay;
-//	}
+	public EmployeePayrollData(int id, String name, String gender, double salary, Date date, long phoneNumber,
+			String address, String department, float basicPay, float deductions, float taxablePay, float incomeTax,
+			float netPay) {
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.salary = salary;
+		this.date = date;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.department = department;
+		this.basicPay = basicPay;
+		this.deductions = deductions;
+		this.taxablePay = taxablePay;
+		this.incomeTax = incomeTax;
+		this.netPay = netPay;
+	}
 	
 	
 	
@@ -60,11 +60,7 @@ public class EmployeePayrollData {
 				+ department + ", basicPay=" + basicPay + ", deductions=" + deductions + ", taxablePay=" + taxablePay
 				+ ", incomeTax=" + incomeTax + ", netPay=" + netPay + "]";
 	}
-	/**
-	 * @param id
-	 * @param name
-	 * @param salary
-	 */
+	
 	public EmployeePayrollData(int id, String name, double salary, Date date) {
 		this.id = id;
 		this.name = name;
@@ -72,51 +68,36 @@ public class EmployeePayrollData {
 		this.date = date;
 		
 	}
-	/**
-	 * @return the id
-	 */
+	
+	
 	public int getId() {
 		return id;
 	}
-	/**
-	 * @param id the id to set
-	 */
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-	/**
-	 * @return the name
-	 */
+	
 	public String getName() {
 		return name;
 	}
-	/**
-	 * @param name the name to set
-	 */
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * @return the salary
-	 */
+	
 	public double getSalary() {
 		return salary;
 	}
-	/**
-	 * @param salary the salary to set
-	 */
+	
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	/**
-	 * @return the date
-	 */
+	
 	public Date getDate() {
 		return date;
 	}
-	/**
-	 * @param date the date to set
-	 */
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class EmployeePayrollService {
 	public static String gender;
 	public static double salary;
 	public static Date start_date;
+	public static LocalDate date;
 
 	static String jdbcURL = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
 	static String username = "root";
@@ -33,11 +35,15 @@ public class EmployeePayrollService {
 		// PrepareStatementForEmployeeData();
 		// RetrieveEmployeePayrollDataByName(name);
 		// RetrieveEmployeePayrollDataByName(start_date);
-		 //analyseEmployee();
-		addNewEmployee(name);
+		// analyseEmployee();
+		// addNewEmployee("Rahul", "M", 250000.00, date, 200000, 50000, 5000, 5000,
+		// 200000);
+		
+
+		createNewTable(75000, 15000, 60000, 6000, 69000);
 
 	}
-
+	
 	public static Connection getConnection() {
 		try {
 			System.out.println("Connecting to database " + jdbcURL);
@@ -236,11 +242,7 @@ public class EmployeePayrollService {
 			ResultSet res = preparedStatement.executeQuery();
 
 			while (res.next()) {
-				// id = res.getInt(1);
-				// name = res.getString(2);
 				salary = res.getDouble(1);
-				// System.out.println("Employee Number: " + id);
-				// System.out.println("Employee Name: " + name);
 				System.out.println("Employee Salary: " + salary);
 				employeePayrollList.add(new EmployeePayrollData(id, name, salary, start_date));
 			}
@@ -252,25 +254,86 @@ public class EmployeePayrollService {
 		}
 		return employeePayrollList;
 	}
-	
-	//UC7
-	public static List<EmployeePayrollData> addNewEmployee(String name) {
-		String query = " insert into employee_payroll(name, gender, salary, start_date, phoneNumber, address, Department, BasicPay, Deductions, TaxablePay, IncomeTax, NetPay) values(\"Raj\", \"M\", 75000, \"2022-03-18\", 980000250, \"Delhi\", \"S&M\", 75000, 5000, 2500,2500,70000);";
-		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-		try {
-			Connection connection = getConnection();
-			Statement statement = (Statement) connection.createStatement();
-			// ResultSet res = statement.executeQuery("Update employee_payroll set
-			// salary=300000 where name='Teressa'");
-			int rs = statement.executeUpdate(query);
-			System.out.println("Data Added! " + rs);
-			System.out.println(employeePayrollList);
 
+	// UC7
+	public static EmployeePayrollData addNewEmployee(String name, String gender, double salary, LocalDate date,
+			double basicPay, double deductions, double taxablePay, double incomeTax, double netPay) {
+		int id = 1;
+		Connection connection = null;
+		EmployeePayrollData employeePayrollData = null;
+		try {
+			connection = getConnection();
+			connection.setAutoCommit(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return employeePayrollList;
+		try (Statement statement = (Statement) connection.createStatement()) {
+			String sql = String.format(
+					"Insert into employee_payroll(name, gender, salary, start_date, BasicPay, Deductions, TaxablePay, IncomeTax, NetPay) values ('%s','%s','%s','%s', '%s', '%s', '%s','%s','%s')",
+					name, gender, salary, LocalDate.parse("2022-02-03"), basicPay, deductions, taxablePay, incomeTax,
+					netPay);
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+			if (rowAffected == 1) {
+				ResultSet resultSet = statement.getGeneratedKeys();
+				if (resultSet.next())
+					id = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollData;
+	}
+
+	// UC8
+	public static EmployeePayrollData createNewTable(double salary, double deductions, double taxablePay,
+			double incomeTax, double netPay) {
+		int id = 1;
+		Connection connection = null;
+		EmployeePayrollData employeePayrollData = null;
+		 salary = 75000;
+		 deductions = 0.2 * salary;
+		// basicPay = 75000;
+		 taxablePay = salary - deductions;
+		 incomeTax = 0.1 * taxablePay;
+		 netPay = salary - incomeTax;
+
+		try {
+			connection = getConnection();
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try (Statement statement = (Statement) connection.createStatement()) {
+
+			String sql = String.format(
+					" INSERT INTO payroll_details (salary, Deductions, TaxablePay,IncomeTax, NetPay) VALUES('%s', '%s', '%s', '%s', '%s')",
+					salary, deductions, taxablePay, incomeTax, netPay);
+
+			// String sql = String.format( "INSERT INTO payroll_details (id, salary,
+			// Deductions, TaxablePay,IncomeTax, NetPay) VALUES(id, salary, deductions,
+			// taxablePay, incomeTax, netPay)");
+			// String sql = String.format( "INSERT INTO payroll_details(id, Salary,
+			// BasicPay, Deductions, TaxablePay,IncomeTax, NetPay) VALUES(id, salary,
+			// basicPay, deductions, taxablePay, incomeTax, netPay)") ;
+			// statement.executeUpdate(sql);
+
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+			if (rowAffected == 1) {
+				ResultSet resultSet = statement.getGeneratedKeys();
+				// System.out.println("Data Updated! " + resultSet);
+				if (resultSet.next())
+					id = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return employeePayrollData;
 
 	}
+
+
+
+	
 
 }

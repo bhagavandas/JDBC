@@ -17,6 +17,7 @@ public class EmployeePayrollData {
 	public float taxablePay;
 	public float incomeTax;
 	public float netPay;
+	public Object employeeName;
 	/**
 	 * @param id
 	 * @param name

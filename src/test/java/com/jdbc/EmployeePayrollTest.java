@@ -24,23 +24,32 @@ public class EmployeePayrollTest {
 		EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, "Anirban", 3000000, null);
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
 		List<EmployeePayrollData> result2 = employeePayrollService.RetrieveEmployeePayrollDataByName(employeePayrollData.getName());
-		System.out.println(employeePayrollData.getName());
+		//System.out.println(employeePayrollData.getName());
 		Assert.assertEquals(employeePayrollData.getName(), "Anirban");
 
 	}
 
 	// UC 7
-	@Test
-	public void givenNewEmployee_WhenAdded_ShouldMatch() {
-		EmployeePayrollData employeePayrollData = new EmployeePayrollData(0, "Rahul", "M", 250000.00, null, 200000, null, null, 50000, 5000, 5000, 200000, 0);
-		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		List<EmployeePayrollData> result2 = (List<EmployeePayrollData>) employeePayrollService.addNewEmployee(employeePayrollData.getName(), null, 0, null, 0, 0, 0, 0, 0);
-		System.out.println(employeePayrollData.getName());
-		Assert.assertEquals("Rahul", employeePayrollData.getName());
+		@Test
+		public void givenNewEmployee_WhenAdded_ShouldMatch() {
+			EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, "Kiran", 3000000, null);
+			EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+			List<EmployeePayrollData> result2 = employeePayrollService.addNewEmployee(employeePayrollData.getName());
+			//System.out.println(employeePayrollData.getName());
+			Assert.assertEquals("Kiran", employeePayrollData.getName());
 
-	}
+		}
 	
-	
+		// UC 8
+				@Test
+				public void givenNewEmployee_WhenAdded_ShouldMatchDB() {
+					EmployeePayrollData employeePayrollData = new EmployeePayrollData(1, "Hussey", 75000, null);
+					EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+					List<EmployeePayrollData> result2 = employeePayrollService.createNewTable(employeePayrollData.getName());
+					//System.out.println(employeePayrollData.getName());
+					Assert.assertEquals("Hussey", employeePayrollData.getName());
+
+				}
 	
 	
 
